@@ -2,10 +2,8 @@ import { createProgram, createShader } from "./shader";
 import vertexShaderSource from "./shader.vert"
 import fragmentShaderSource from "./shader.frag"
 import Stats from "stats.js";
-import '@tensorflow/tfjs-backend-webgl'
 import { SupportedModels, createDetector, Keypoint } from "@tensorflow-models/hand-pose-detection"
 const { MediaPipeHands } = SupportedModels
-import * as tf from '@tensorflow/tfjs-core';
 import { Vector3 } from "./Vector3";
 
 const stats = new Stats()
@@ -16,10 +14,9 @@ function createVector(v0: Keypoint, v1: Keypoint) {
 }
 
 async function main() {
-  await tf.setBackend("webgl");
   const detector = await createDetector(MediaPipeHands, {
-    runtime: "tfjs",
-    modelType: "lite",
+    runtime: "mediapipe",
+    solutionPath: "https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1635986972/",
   })
   const mainCanvas = document.createElement("canvas")
   const mainContext = mainCanvas.getContext("2d")
